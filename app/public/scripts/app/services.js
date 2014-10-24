@@ -1,8 +1,12 @@
 angular.module('game.services', ['ngResource'])
 .constant('BaseUrl', '/api/v0.1')
-.factory('Question', Question);
-
-function Question($resource, BaseUrl){
+.factory('Question', function ($http, BaseUrl){
+    return {
+        get: function(qId){
+            return $http.get(BaseUrl + '/question/' + qId);
+        }
+    };
+    /*
     return $resource(BaseUrl + '/question/:questionId',{}, {
         query: {
             method: 'GET',
@@ -10,26 +14,52 @@ function Question($resource, BaseUrl){
             //questionId: '@_id',
             isArray: false
         }
-    });
-}
+    });*/
+});
 
-
-
-
-angular.module('game.services').factory('State', function ($http){
-    return {
-        playlist: [],
-        current: 0
+angular.module('game.services').factory('State', function(){
+    var questions = [];
+    for (i = 0; i < 20; i++){
+        questions.push(i);
     }
-}).factory('Playlist', function($http){
-    return function (callback){
-        $http.get('/api/v0.1/game/new')
-           .success(function (data, status, headers, config){
-               callback(data);
-           }).
-           error(function(data, status, headers, config){
-               console.log(error);
-           });
+    shuffle(questions);
+
+    var totalQuestions = 10;
+    questions = questions.slice(totalQuestions);
+    var current = 0;
+
+    function nextQuestion(){
+        ++current;
+    }
+
+    function currentQuestionId(){
+        return questions[current];
+    }
+
+    function currentQuestion(){
+        return current + 1;
+    }
+
+    function hasMoreQuestions(){
+        return current < totalQuestions - 1;
+    }
+
+    function reset(){
+        questions = [];
+        for (i = 0; i < 20; i++){
+            questions.push(i);
+        }
+        shuffle(questions);
+        questions = questions.slice(totalQuestions);
+        current = 0;
+    }
+
+    return {
+        currentQuestion: currentQuestion,
+        currentQuestionId: currentQuestionId,
+        nextQuestion: nextQuestion,
+        hasMoreQuestions: hasMoreQuestions,
+        reset: reset
     }
 });
 

@@ -15,7 +15,6 @@ var test_question = {
     }
 };
 
-
 function unmarshall(data){
     var img_name = data.answer.img;
 
@@ -25,6 +24,72 @@ function unmarshall(data){
     return data; 
 }
 
+var bootstrapQuestion = function(game){
+    var qId = game.State.currentQuestionId();
+    
+    game.Question.get(qId).
+        success(function(data){
+            var question = unmarshall(data);
+            game.question = question;
+        }).error(function(error){
+            console.log(error);
+        });
+
+    game.solved = false;
+    game.visual_hint = "/public/img/sugerencia.gif";
+}
+
+var GameCtrl = function(Question, State, $timeout){
+   this.visual_hint = "/public/img/sugerencia.gif";
+   this.solved = false;
+   this.Question = Question;
+   this.State = State;
+   this.$timeout = $timeout;
+
+   bootstrapQuestion(this);
+};
+
+GameCtrl.prototype.currentQuestion = function (){
+    return this.State.currentQuestion();
+}
+
+GameCtrl.prototype.getQuestion = function(){
+   bootstrapQuestion(this);
+}
+
+GameCtrl.prototype.checkAnswer = function(hint){
+    this.solved = true;
+    if (this.question.answer.id == hint.id){
+        this.visual_hint = this.question.answer.img;       
+    } else {
+        this.visual_hint = "/public/img/error.gif";
+    }
+
+    if (this.State.hasMoreQuestions()){
+        this.loadNext();
+    }
+}
+
+GameCtrl.prototype.loadNext = function (){
+    this.State.nextQuestion();
+    var self = this; 
+    this.$timeout(function (){
+          console.log('bang');
+          self.getQuestion();
+          return false;
+    }, 2000);
+}
+
+GameCtrl.prototype.drop = function(){
+    this.State.reset();
+    this.getQuestion();
+}
+
+angular.module('game.controllers')
+.controller('GameCtrl', ['Question', 'State', '$timeout', GameCtrl]);
+
+
+/*
 function check_solution(answer, State, $scope, $location, $timeout){
     return function(qId){
         $scope.solved = true;
@@ -70,12 +135,12 @@ function QuestionCtrl(Question, State, Playlist, $routeParams, $scope, $location
 
     console.log(State.playlist[State.current]);
     State.current = State.current + 1;
-    $scope.visual_hint = "/public/img/sugerencia.gif";
-    $scope.solved = false;
 }
 
 angular.module('game.controllers')
 .controller('QuestionCtrl', QuestionCtrl);
+
+*/
 
 /*
 function PostListCtrl (Post, $scope) {

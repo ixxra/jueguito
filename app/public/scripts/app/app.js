@@ -1,10 +1,29 @@
-//var app = angular.module('game', ['ngRoute', 'game.controllers']);
 var app = angular.module('game', ['ngRoute', 'game.controllers']);
 
 //function config ($locationProvider, $routeProvider) {
 //	
 //}
 
+
+app.config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
+	$locationProvider.html5Mode(false);
+	$routeProvider.
+    when('/play', {
+        templateUrl: '/public/templates/game.tpl.html',
+        controller: 'GameCtrl',
+        controllerAs: 'game'
+    }).
+    when('/about', {
+        templateUrl: '/public/templates/about.tpl.html'
+    }).
+    when('/records', {
+        templateUrl: '/public/templates/scoreboard.tpl.html'
+    });
+}]);
+
+
+
+/*
 app.config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
 	$locationProvider.html5Mode(false);
 	$routeProvider
@@ -16,4 +35,4 @@ app.config(['$locationProvider', '$routeProvider', function ($locationProvider, 
         templateUrl: '/public/templates/about.tpl.html'
     });
 }])
-
+*/
