@@ -19,3 +19,17 @@ def question(id):
 @bobo.query('/api/v0.1/game/new', content_type='application/json')
 def new_game():
     return game.new_game()
+
+
+@bobo.query('/api/v0.1/game/records', content_type='application/json')
+def get_records():
+    return [
+        {
+            'name': n, 
+            'game': g, 
+            'points': p
+        } for \
+        n, g, p in game.get_records()
+    ]
+
+

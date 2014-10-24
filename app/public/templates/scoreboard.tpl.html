@@ -11,6 +11,22 @@
         <div class="row">
         </div>
         <div class="row well">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Juego</th>
+                        <th>Puntuación</th>
+                    </tr>
+                </thead>
+            <tbody>
+                <tr ng-repeat="player in record.entries">
+                    <td>{{player.name}}</td>
+                    <td>{{player.game}}</td>
+                    <td>{{player.points}}</td>
+                </tr> 
+            </tbody>
+            </table>
         </div>
     </div>
 </article>

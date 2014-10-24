@@ -1,5 +1,5 @@
 import random
-
+import csv
 '''
 def p_score(n):
     if n == 0:
@@ -52,9 +52,19 @@ def new_game():
     random.shuffle(total)
 
     return total[:10]
+
+
+def get_records():
+    r = csv.reader(open('record'))
+    next(r) #We skip the header
+    recs = [(n, g, int(p)) for n, g, p in r]
+    return sorted(recs, key=lambda x: x[-1], reverse=True)
     
 
-#puntos = 0
+def save_record(name:str, game:str, points:int):
+    w = csv.writer(open('record', 'a'))
+    w.writerow([name, game, points])
+
 
 #x = raw_input('Bienvenido!, si quieres saber como jugar escribe h y presiona enter, si no, simplemente presiona enter para empezar a jugar ')
 

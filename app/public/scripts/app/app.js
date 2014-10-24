@@ -17,7 +17,14 @@ app.config(['$locationProvider', '$routeProvider', function ($locationProvider, 
         templateUrl: '/public/templates/about.tpl.html'
     }).
     when('/records', {
-        templateUrl: '/public/templates/scoreboard.tpl.html'
+        templateUrl: '/public/templates/scoreboard.tpl.html',
+            controller: 'RecordCtrl',
+            controllerAs: 'record'
+    }).
+    when('/help/:topicId', {
+        templateUrl: '/public/templates/help.tpl.html',
+        controller: 'HelpCtrl',
+        controllerAs: 'help'
     });
 }]);
 

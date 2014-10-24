@@ -1,0 +1,16 @@
+<article class="blog-post">
+    <header><h1 class="text-center">Ayuda</h1></header>
+	<div class="container-fluid">
+        <div class="col-sm-3">
+            <aside>
+                <a ng-repeat="topic in help.topics" ng-click="topic.url" class="nav" ng-href="{{topic.url}}">{{topic.name}}</a>
+            </aside>
+        </div>
+    <div class="col-lg-6 ">
+        <h2>Como jugar <em>{{help.topic.name}}</em></h2>
+        <div class="row well">
+            {{help.topic.instructions}}
+        </div>
+    </div>
+</article>
+

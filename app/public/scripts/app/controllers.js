@@ -85,8 +85,24 @@ GameCtrl.prototype.drop = function(){
     this.getQuestion();
 }
 
-angular.module('game.controllers')
-.controller('GameCtrl', ['Question', 'State', '$timeout', GameCtrl]);
+
+var RecordCtrl = function(Record){
+    var self = this;
+    self.entries = Record.query(function (data){
+        self.entries = data;
+    });
+}
+
+
+var HelpCtrl = function($routeParams, Help){
+    this.topic = Help.topic($routeParams.topicId);
+    this.topics = Help.get_topics();
+};
+
+angular.module('game.controllers').
+controller('GameCtrl', ['Question', 'State', '$timeout', GameCtrl]).
+controller('RecordCtrl', ['Record', RecordCtrl]).
+controller('HelpCtrl', ['$routeParams', 'Help', HelpCtrl]);
 
 
 /*
