@@ -1,0 +1,18 @@
+<article class="blog-post">
+	<header class="blog-post-header">
+		<h1>Pregunta {{ question.number }}</h1>
+	</header>
+	<div class="row">
+        <img ng-src="{{visual_hint}}" height=250px></img>
+    </div>
+    <div class="row">
+		{{ question.body }}
+    </div>
+    <div class="row">
+        <div class="btn-toolbar">
+                <button type="button" class="btn btn-lg btn-primary" ng-click="check(hint.id)" ng-disabled="solved" ng-repeat="hint in question.hints">{{ hint.text }}</button>
+    
+        </div>
+    </div>
+</article>
+
