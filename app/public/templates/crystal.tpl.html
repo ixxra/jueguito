@@ -1,0 +1,16 @@
+<article class="blog-post">
+    <header><h1 class="text-center">Encuentra el cristal</h1></header>
+	<div class="container-fluid">
+        <div class="col-sm-3">
+            <aside>
+                <a ng-click="patrick.reset()" class="nav">Reiniciar</a>
+            </aside>
+        </div>
+    <div class="col-lg-6 ">
+        <h2>Reto {{patrick.problem.number}}</h2>
+        <div class="row">
+            <img ng-click="patrick.bang()" ng-src="{{patrick.problem.image.url}}" height="500px"></img>
+        </div>
+    </div>
+</article>
+

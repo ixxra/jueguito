@@ -97,8 +97,44 @@ var Help = function(){
     return {topic: topic, get_topics: get_topics};
 };
 
+var Patrick = function () {
+    var total = 4;
+    var current = 0;
+    
+    function hasMoreImages(){
+        return current < total - 1;
+    }
+
+    function next(){
+        ++current;
+        if (current > total){
+            current = total;
+        }
+    }
+
+    function problem(){
+        var _current = current + 1;
+        return {
+            number: _current,
+            image: {url: '/public/img/patrick/cristal'+_current+'.jpg'}
+        };
+    }
+
+    function reset(){
+        current = 0;
+    }
+
+    return {
+        problem: problem,
+        hasMoreImages: hasMoreImages,
+        next: next,
+        reset: reset
+    };
+};
+
 angular.module('game.services').
 constant('BaseUrl', '/api/v0.1').
+factory('Patrick', Patrick).
 factory('Record', function($resource, BaseUrl){
    return $resource(BaseUrl + '/game/records'); 
 }).

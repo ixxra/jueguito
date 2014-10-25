@@ -33,3 +33,9 @@ def get_records():
     ]
 
 
+@bobo.query('/api/v0.1/game/patrick/:id', content_type='application/json')
+def get_patrick(id):
+    try:
+        return game.get_crystal(int(id))
+    except AssertionError:
+        raise bobo.NotFound

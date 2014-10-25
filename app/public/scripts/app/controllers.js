@@ -86,12 +86,34 @@ GameCtrl.prototype.drop = function(){
 }
 
 
+var PatrickCtrl = function(Patrick, $timeout){
+    this.Patrick = Patrick;
+    this.$timeout = $timeout;
+    this.problem = Patrick.problem();
+};
+
+PatrickCtrl.prototype.bang = function(){
+    var self = this;
+    this.$timeout(function(){
+        if (self.Patrick.hasMoreImages()){
+            self.Patrick.next();
+            self.problem = self.Patrick.problem();
+        }
+        return false;
+    },1500);
+};
+
+PatrickCtrl.prototype.reset = function(){
+    this.Patrick.reset();
+    this.problem = this.Patrick.problem()
+}
+
 var RecordCtrl = function(Record){
     var self = this;
     self.entries = Record.query(function (data){
         self.entries = data;
     });
-}
+};
 
 
 var HelpCtrl = function($routeParams, Help){
@@ -101,6 +123,7 @@ var HelpCtrl = function($routeParams, Help){
 
 angular.module('game.controllers').
 controller('GameCtrl', ['Question', 'State', '$timeout', GameCtrl]).
+controller('PatrickCtrl', ['Patrick','$timeout', PatrickCtrl]).
 controller('RecordCtrl', ['Record', RecordCtrl]).
 controller('HelpCtrl', ['$routeParams', 'Help', HelpCtrl]);
 

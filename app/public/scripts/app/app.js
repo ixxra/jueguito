@@ -13,6 +13,11 @@ app.config(['$locationProvider', '$routeProvider', function ($locationProvider, 
         controller: 'GameCtrl',
         controllerAs: 'game'
     }).
+    when('/play/patrick', {
+        templateUrl: '/public/templates/crystal.tpl.html',
+        controller: 'PatrickCtrl',
+        controllerAs: 'patrick'
+    }).
     when('/about', {
         templateUrl: '/public/templates/about.tpl.html'
     }).

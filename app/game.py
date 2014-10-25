@@ -1,14 +1,5 @@
 import random
 import csv
-'''
-def p_score(n):
-    if n == 0:
-        print 'tienes', n, 'puntos x.x'
-    if n == 1:
-        print 'tienes', n, 'punto :D'
-    if n > 1:
-        print 'tienes', n, 'puntos :D'
-'''
 
 def get_question(id):
     assert isinstance(id, int) and 0 <= id and id < 20, \
@@ -45,13 +36,33 @@ def get_question(id):
                 'img': image
             }    
         }
-   
 
-def new_game():
-    total = list(range(20))
-    random.shuffle(total)
+def get_crystal(id):
+    assert isinstance(id, int) and id == 1, \
+        'Invalid id'
 
-    return total[:10]
+    items = []
+
+    for l in open('data/patrick/cristal'+str(id)):
+        l = l.strip()
+        if len(l) > 0:
+            k, v = l.split('=')
+            k, v = k.strip(), v.strip()
+            items.append((k, v))
+    
+    items = dict(items)
+    #w = int(num[0])
+    #h = int(num[1])
+    #x = int(num[2])
+    #y = int(num[3])
+    return {
+            'background':{
+                'w': items['w'],
+                'h': items['h'],
+                'img':'cristal'+str(id)+'.jpg',
+            },
+            'cristal': { 'pos':{'x':items['x'], 'y': items['y']}}
+    }
 
 
 def get_records():
